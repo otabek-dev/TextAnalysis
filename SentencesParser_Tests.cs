@@ -67,6 +67,7 @@ namespace TextAnalysis
         {
             var originalText = "b;\tc;\rd;\ne;\r\nf;\r\n\r\ng";
             var escapedText = Regex.Escape(originalText);
+
             var expected = new List<List<string>>
             {
                 new List<string> {"b"},

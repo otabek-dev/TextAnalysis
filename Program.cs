@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using NUnitLite;
 
 namespace TextAnalysis
@@ -26,6 +27,9 @@ namespace TextAnalysis
             });
 
             var text = File.ReadAllText("HarryPotterText.txt");
+
+
+
             var sentences = SentencesParserTask.ParseSentences(text);
             var frequency = FrequencyAnalysisTask.GetMostFrequentNextWords(sentences);
             //Расскомментируйте этот блок, если хотите выполнить последнюю задачу до первых двух.
