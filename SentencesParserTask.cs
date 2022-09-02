@@ -14,12 +14,11 @@ namespace TextAnalysis
             var sentencesList = new List<List<string>>();
             
             var wordList = new List<string>();
-            
+
             for (int i = 0; i < sentencesArray.Length; i++)
             {
-                //---------------------
                 wordList.AddRange(sentencesArray[i].ToLower().Split(
-                    new char[] { '^', '#', '$', '-', '+', '1', '=', ' ', '\t', '\n', '\r', '—', '\"' }, 
+                    new char[] { '^', '#', '$', '-', '+', '1', '=', ' ', '\t', '\n', '\r', '—', '\"', ',', '…' },
                     StringSplitOptions.RemoveEmptyEntries
                     ));
 
@@ -27,7 +26,7 @@ namespace TextAnalysis
 
                 for (int j = 0; j < wordList.Count; j++)
                 {
-                    
+
                     wordList[j] = wordList[j].Trim(' ', ',');
 
                     foreach (char c in wordList[j])
@@ -41,22 +40,7 @@ namespace TextAnalysis
                     word.Clear();
                 }
 
-                //---------------------
-
-                var word2 = new StringBuilder();
-
-                foreach (char c in sentencesArray[i])
-                {
-                    if (char.IsLetter(c) || c == '\'')
-                    {
-                        word2.Append(c);
-                    } else
-                    {
-                        wordList.Add(word2.ToString());
-                    }
-                }
-
-
+                wordList.RemoveAll(s => s == "");
 
                 if (wordList.Count != 0)
                 {
@@ -65,8 +49,6 @@ namespace TextAnalysis
                 }
                 wordList.Clear();
             }
-
-            //Console.WriteLine(text);
 
             return sentencesList;
         }

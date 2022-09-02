@@ -30,15 +30,15 @@ namespace TextAnalysis
 
             ////[Values('^', '#', '$', '-', '+', '1', '=', ' ', '\t', '\n', '\r')]
             //char delimiter = '^';
-        
+
             //var text2 = "x" + delimiter + "y";
             //var expected = new List<List<string>>
             //{
             //    new List<string> {"x", "y"}
             //};
             //var actual = SentencesParserTask.ParseSentences(text2);
-            
 
+            SentencesParserTask.ParseSentences("” He put on a high voice, “‘Oh Professor Flitwick, I'm so worried, I think I got question fourteen b wrong…'”\r\n   “Oh, shut up,” said Hermione, but she agreed to go and watch out for Snape\r\n");
             var sentences = SentencesParserTask.ParseSentences(text);
             var frequency = FrequencyAnalysisTask.GetMostFrequentNextWords(sentences);
             //Расскомментируйте этот блок, если хотите выполнить последнюю задачу до первых двух.
