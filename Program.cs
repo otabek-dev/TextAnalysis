@@ -15,9 +15,9 @@ namespace TextAnalysis
             // Все непрошедшие тесты 
             var testsToRun = new string[]
             {
-                "TextAnalysis.SentencesParser_Tests",
-                "TextAnalysis.FrequencyAnalysis_Tests",
-                "TextAnalysis.TextGenerator_Tests",
+                "TextAnalysis.SentencesParser_Tests"
+                //"TextAnalysis.FrequencyAnalysis_Tests",
+                //"TextAnalysis.TextGenerator_Tests",
             };
             new AutoRun().Execute(new[]
             {
@@ -28,7 +28,16 @@ namespace TextAnalysis
 
             var text = File.ReadAllText("HarryPotterText.txt");
 
-
+            ////[Values('^', '#', '$', '-', '+', '1', '=', ' ', '\t', '\n', '\r')]
+            //char delimiter = '^';
+        
+            //var text2 = "x" + delimiter + "y";
+            //var expected = new List<List<string>>
+            //{
+            //    new List<string> {"x", "y"}
+            //};
+            //var actual = SentencesParserTask.ParseSentences(text2);
+            
 
             var sentences = SentencesParserTask.ParseSentences(text);
             var frequency = FrequencyAnalysisTask.GetMostFrequentNextWords(sentences);

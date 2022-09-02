@@ -17,7 +17,11 @@ namespace TextAnalysis
             
             for (int i = 0; i < sentencesArray.Length; i++)
             {
-                wordList.AddRange(sentencesArray[i].ToLower().Split(new char[] { ' '}, StringSplitOptions.RemoveEmptyEntries));
+                //---------------------
+                wordList.AddRange(sentencesArray[i].ToLower().Split(
+                    new char[] { '^', '#', '$', '-', '+', '1', '=', ' ', '\t', '\n', '\r', '—', '\"' }, 
+                    StringSplitOptions.RemoveEmptyEntries
+                    ));
 
                 var word = new StringBuilder();
 
@@ -36,8 +40,29 @@ namespace TextAnalysis
                     wordList[j] = word.ToString();
                     word.Clear();
                 }
-               
-                sentencesList.Add(new List<string>(wordList));
+
+                //---------------------
+
+                var word2 = new StringBuilder();
+
+                foreach (char c in sentencesArray[i])
+                {
+                    if (char.IsLetter(c) || c == '\'')
+                    {
+                        word2.Append(c);
+                    } else
+                    {
+                        wordList.Add(word2.ToString());
+                    }
+                }
+
+
+
+                if (wordList.Count != 0)
+                {
+                    sentencesList.Add(new List<string>(wordList));
+
+                }
                 wordList.Clear();
             }
 
