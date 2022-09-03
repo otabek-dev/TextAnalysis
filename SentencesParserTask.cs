@@ -26,7 +26,6 @@ namespace TextAnalysis
 
                 for (int j = 0; j < wordList.Count; j++)
                 {
-
                     wordList[j] = wordList[j].Trim(' ', ',');
 
                     foreach (char c in wordList[j])
