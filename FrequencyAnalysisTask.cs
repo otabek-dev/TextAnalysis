@@ -44,11 +44,57 @@ namespace TextAnalysis
           
         }
 
+        private static int GetValueInMap(Dictionary<(string, string), int> frequencyMap, (string, string) key)
+        {
+            int result;
+            frequencyMap.TryGetValue(key, out result);
+            return result;
+        }
+
         public static void CreateResultMap(Dictionary<string, string> result, Dictionary<(string, string), int> frequencyMap)
         {
+            //foreach(var e in frequencyMap.Keys)
+            //{
+            //    if(GetValueInMap(frequencyMap,e) == 1)
+            //    {
+            //        result.TryAdd(e.Item1,e.Item2);
+            //        frequencyMap.Remove(e);
+            //    }
+            //}
+
             foreach(var e in frequencyMap.Keys)
             {
+                var ee = e;
 
+                foreach(var e2 in frequencyMap.Keys)
+                {
+                    if (e.Item1 == e2.Item1)
+                    {
+                        if (frequencyMap[e] > frequencyMap[e2])
+                        {
+                            ee = e;
+                        }
+                        else if (frequencyMap[e] == frequencyMap[e2])
+                        {
+                            var item1Compare = String.CompareOrdinal(e.Item1, e2.Item1);
+                            var item2Compare = String.CompareOrdinal(e.Item2, e2.Item2);
+
+                            if ((item1Compare + item2Compare) < 0)
+                            {
+                                ee = e;
+                            }else
+                            {
+                                ee = e2;
+                            }
+                        } 
+                        else
+                        {
+                            ee = e2;
+                        }
+                    }
+                }
+
+                result.TryAdd(ee.Item1, ee.Item2);
             }
         }
 
@@ -77,8 +123,11 @@ namespace TextAnalysis
                         break;
                 }
             }
-            
-            
+
+            CreateResultMap(result, frequencyMap);
+
+
+
             return result;
         }
     }
