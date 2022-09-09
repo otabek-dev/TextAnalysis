@@ -23,7 +23,7 @@ namespace TextAnalysis
             return false;
         }
 
-        public static void TryAdd(this Dictionary<(string, string), int> dictionary, (string, string) key)
+        public static void TryAdd(this Dictionary<string, Dictionary<string, int>> dictionary, string key, string value)
         {
             if (dictionary == null)
             {
@@ -32,14 +32,19 @@ namespace TextAnalysis
 
             if (dictionary.ContainsKey(key))
             {
-                int n = 0;
-                dictionary.TryGetValue(key, out n);
-                dictionary.Remove(key);
-                dictionary.Add(key,++n);
+
+                if(dictionary[key].ContainsKey(value))
+                {
+                    dictionary[key][value]++;
+                }
+                else
+                {
+                    dictionary[key].Add(value, 1);
+                }
             }
             else
             {
-                dictionary.Add(key, 1);
+                dictionary.Add(key, new Dictionary<string, int>() { {value, 1 } });
             }
           
         }
@@ -53,15 +58,6 @@ namespace TextAnalysis
 
         public static void CreateResultMap(Dictionary<string, string> result, Dictionary<(string, string), int> frequencyMap)
         {
-            //foreach(var e in frequencyMap.Keys)
-            //{
-            //    if(GetValueInMap(frequencyMap,e) == 1)
-            //    {
-            //        result.TryAdd(e.Item1,e.Item2);
-            //        frequencyMap.Remove(e);
-            //    }
-            //}
-
             foreach(var e in frequencyMap.Keys)
             {
                 var ee = e;
@@ -98,10 +94,12 @@ namespace TextAnalysis
             }
         }
 
+        //----------------------------------------------------------------------------------------
         public static Dictionary<string, string> GetMostFrequentNextWords(List<List<string>> text)
         {
             var result = new Dictionary<string, string>();
-            var frequencyMap = new Dictionary<(string, string), int>();
+
+            var frequencyMap = new Dictionary<string, Dictionary<string, int>>();
 
 
 
@@ -110,7 +108,7 @@ namespace TextAnalysis
                 for (int i = 0; i < word.Count - 1; i++)
                 {
                     if (word.Count >= 2)
-                        TryAdd(frequencyMap, (word[i], word[i + 1]));
+                        TryAdd(frequencyMap, word[i], word[i+1]);
                     else
                         break;
                 }
@@ -118,13 +116,13 @@ namespace TextAnalysis
                 for (int i = 0; i < word.Count - 2; i++)
                 {
                     if (word.Count >= 3)
-                        TryAdd(frequencyMap, ($"{word[i]} {word[i + 1]}", word[i+2]) );
+                        TryAdd(frequencyMap, $"{word[i]} {word[i + 1]}", word[i+2] );
                     else
                         break;
                 }
             }
 
-            CreateResultMap(result, frequencyMap);
+            //CreateResultMap(result, frequencyMap);
 
 
 

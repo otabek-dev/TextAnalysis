@@ -15,8 +15,8 @@ namespace TextAnalysis
             // Все непрошедшие тесты 
             var testsToRun = new string[]
             {
-                "TextAnalysis.SentencesParser_Tests",
-                "TextAnalysis.FrequencyAnalysis_Tests"
+                //"TextAnalysis.SentencesParser_Tests",
+                //"TextAnalysis.FrequencyAnalysis_Tests"
                 //"TextAnalysis.TextGenerator_Tests",
             };
             new AutoRun().Execute(new[]
