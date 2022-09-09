@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http.Headers;
+using System.Text;
 
 namespace TextAnalysis
 {
@@ -46,51 +48,31 @@ namespace TextAnalysis
             {
                 dictionary.Add(key, new Dictionary<string, int>() { {value, 1 } });
             }
-          
         }
 
-        private static int GetValueInMap(Dictionary<(string, string), int> frequencyMap, (string, string) key)
-        {
-            int result;
-            frequencyMap.TryGetValue(key, out result);
-            return result;
-        }
-
-        public static void CreateResultMap(Dictionary<string, string> result, Dictionary<(string, string), int> frequencyMap)
+        public static void CreateResultMap(Dictionary<string, string> result, Dictionary<string, Dictionary<string, int>> frequencyMap)
         {
             foreach(var e in frequencyMap.Keys)
             {
-                var ee = e;
+                var tempResultFreqMap = new Dictionary<string, int>() { { frequencyMap[e].Keys.Min(), frequencyMap[e][frequencyMap[e].Keys.Min()] } };
 
-                foreach(var e2 in frequencyMap.Keys)
+                foreach (var ee in frequencyMap[e])
                 {
-                    if (e.Item1 == e2.Item1)
+                    if (ee.Value > tempResultFreqMap.Values.First())
                     {
-                        if (frequencyMap[e] > frequencyMap[e2])
+                        tempResultFreqMap.Clear();
+                        tempResultFreqMap.Add(ee.Key, ee.Value);
+                    }
+                    else if (ee.Value == tempResultFreqMap.Values.First())
+                    {
+                        if (string.Compare(ee.Key, tempResultFreqMap.Keys.First()) < 0)
                         {
-                            ee = e;
-                        }
-                        else if (frequencyMap[e] == frequencyMap[e2])
-                        {
-                            var item1Compare = String.CompareOrdinal(e.Item1, e2.Item1);
-                            var item2Compare = String.CompareOrdinal(e.Item2, e2.Item2);
-
-                            if ((item1Compare + item2Compare) < 0)
-                            {
-                                ee = e;
-                            }else
-                            {
-                                ee = e2;
-                            }
-                        } 
-                        else
-                        {
-                            ee = e2;
+                            tempResultFreqMap.Clear();
+                            tempResultFreqMap.Add(ee.Key, ee.Value);
                         }
                     }
-                }
-
-                result.TryAdd(ee.Item1, ee.Item2);
+                } 
+                result.TryAdd(e,tempResultFreqMap.Keys.First());
             }
         }
 
@@ -98,10 +80,7 @@ namespace TextAnalysis
         public static Dictionary<string, string> GetMostFrequentNextWords(List<List<string>> text)
         {
             var result = new Dictionary<string, string>();
-
             var frequencyMap = new Dictionary<string, Dictionary<string, int>>();
-
-
 
             foreach (var word in text)
             {
@@ -122,9 +101,14 @@ namespace TextAnalysis
                 }
             }
 
-            //CreateResultMap(result, frequencyMap);
+            CreateResultMap(result, frequencyMap);
 
+            foreach(var e in frequencyMap)
+            {
+                var lineBuil = new StringBuilder();
 
+                lineBuil.AppendLine($"{e} {{  }}");
+            }
 
             return result;
         }
