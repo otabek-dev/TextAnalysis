@@ -52,7 +52,10 @@ namespace TextAnalysis
             {
                 Console.Write("Введите первое слово (например, harry): ");
                 var beginning = Console.ReadLine();
-                if (string.IsNullOrEmpty(beginning)) return;
+
+                if (string.IsNullOrEmpty(beginning)) 
+                    return;
+
                 var phrase = TextGeneratorTask.ContinuePhrase(frequency, beginning.ToLower(), 10);
                 Console.WriteLine(phrase);
             }
