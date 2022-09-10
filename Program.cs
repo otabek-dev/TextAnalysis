@@ -28,26 +28,11 @@ namespace TextAnalysis
 
             var text = File.ReadAllText("HarryPotterText.txt");
 
-            //SentencesParserTask.ParseSentences("” He put on a high voice, “‘Oh Professor Flitwick, I'm so worried, I think I got question fourteen b wrong…'”\r\n   “Oh, shut up,” said Hermione, but she agreed to go and watch out for Snape\r\n");
+            
             
             var sentences = SentencesParserTask.ParseSentences(text);
             var frequency = FrequencyAnalysisTask.GetMostFrequentNextWords(sentences);
-            //Расскомментируйте этот блок, если хотите выполнить последнюю задачу до первых двух.
-            /*
-            frequency = new Dictionary<string, string>
-            {
-                {"harry", "potter"},
-                {"potter", "boy" },
-                {"boy", "who" },
-                {"who", "likes" },
-                {"boy who", "survived" },
-                {"survived", "attack" },
-                {"he", "likes" },
-                {"likes", "harry" },
-                {"ron", "likes" },
-                {"wizard", "harry" },
-            };
-            */
+            
             while (true)
             {
                 Console.Write("Введите первое слово (например, harry): ");

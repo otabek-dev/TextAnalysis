@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 
 namespace TextAnalysis
 {
@@ -16,10 +14,10 @@ namespace TextAnalysis
 
             for (int i = 0; i < wordsCount; i++)
             {
-                if(!AddNextWord(nextWords, resultWords))
+                if (!AddNextWord(nextWords, resultWords))
                     break;
             }
-            
+
             return string.Join(" ", resultWords).Trim();
         }
 
@@ -48,8 +46,8 @@ namespace TextAnalysis
                     return true;
                 }
             }
-            
-            if (AddNextWord(nextWords, words, key1)) 
+
+            if (AddNextWord(nextWords, words, key1))
             {
                 return true;
             }
